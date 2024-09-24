@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/pokemorra/static/css/main.437f3a8e.css",
-    "main.js": "/pokemorra/static/js/main.af0cd145.js",
+    "main.js": "/pokemorra/static/js/main.92726ccd.js",
     "static/js/488.bc975b27.chunk.js": "/pokemorra/static/js/488.bc975b27.chunk.js",
     "static/media/_2ae73e80-31d5-44c5-a55b-adce8d0914e4.jpg": "/pokemorra/static/media/_2ae73e80-31d5-44c5-a55b-adce8d0914e4.d063fbbebd949c1f59da.jpg",
     "static/media/Poké_Ball_icon.svg-modified.png": "/pokemorra/static/media/Poké_Ball_icon.svg-modified.0a82307702351c85380c.png",
@@ -11,11 +11,11 @@
     "static/media/slick.woff": "/pokemorra/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/pokemorra/index.html",
     "main.437f3a8e.css.map": "/pokemorra/static/css/main.437f3a8e.css.map",
-    "main.af0cd145.js.map": "/pokemorra/static/js/main.af0cd145.js.map",
+    "main.92726ccd.js.map": "/pokemorra/static/js/main.92726ccd.js.map",
     "488.bc975b27.chunk.js.map": "/pokemorra/static/js/488.bc975b27.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.437f3a8e.css",
-    "static/js/main.af0cd145.js"
+    "static/js/main.92726ccd.js"
   ]
 }
