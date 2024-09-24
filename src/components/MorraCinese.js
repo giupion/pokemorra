@@ -68,8 +68,6 @@ const MorraCinese = () => {
   const handleComputerChoice = () => {
     const compChoice = pokemons[Math.floor(Math.random() * pokemons.length)];
     setComputerChoice(compChoice);
-    setIsPokemonRevealed(true); // Imposta lo stato a true quando il computer fa la scelta
-    determineOutcome(userChoice, compChoice); // Chiama la funzione di determinazione qui
   };
 
   const handleNewGame = () => {
@@ -79,19 +77,24 @@ const MorraCinese = () => {
     setIsPokemonRevealed(false); // Resetta anche lo stato per un nuovo gioco
   };
 
-  const determineOutcome = (user, computer) => {
-    if (!user || !computer) return; // Se i Pokémon non sono stati rivelati, non mostrare niente
-    if (user.type === computer.type) {
+  const determineOutcome = () => {
+    if (!userChoice || !computerChoice) return; // Se i Pokémon non sono stati rivelati, non mostrare niente
+    if (userChoice.type === computerChoice.type) {
       setResult('Pareggio!');
     } else if (
-      (user.type === 'fire' && computer.type === 'grass') ||
-      (user.type === 'water' && computer.type === 'fire') ||
-      (user.type === 'grass' && computer.type === 'water')
+      (userChoice.type === 'fire' && computerChoice.type === 'grass') ||
+      (userChoice.type === 'water' && computerChoice.type === 'fire') ||
+      (userChoice.type === 'grass' && computerChoice.type === 'water')
     ) {
       setResult('Hai Vinto!');
     } else {
       setResult('Hai Perso!');
     }
+  };
+
+  const handleReveal = () => {
+    setIsPokemonRevealed(true); // Imposta lo stato a true quando entrambi i Pokémon vengono rivelati
+    determineOutcome(); // Chiama la funzione di determinazione qui
   };
 
   return (
@@ -118,6 +121,9 @@ const MorraCinese = () => {
         )}
         <h3>Scelta del Computer</h3>
         {isPokemonRevealed && result && <h2>{result}</h2>} {/* Mostra l'esito solo se entrambi i Pokémon sono rivelati */}
+      </div>
+      <div>
+        <button onClick={handleReveal} disabled={!computerChoice}>Rivela Pokémon</button>
       </div>
     </div>
   );
