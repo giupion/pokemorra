@@ -99,7 +99,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background-image: url('./_2ae73e80-31d5-44c5-a55b-adce8d0914e4.jpg'); /* Corretto per public */
+  background-image: url('./poke.jpg'); /* Corretto per public */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
