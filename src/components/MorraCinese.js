@@ -56,33 +56,36 @@ const MorraCinese = () => {
 
   const [userChoice, setUserChoice] = useState(null);
   const [computerChoice, setComputerChoice] = useState(null);
-  const [result, setResult] = useState(''); // Stato per il risultato
+  const [result, setResult] = useState('');
+  const [isPokemonRevealed, setIsPokemonRevealed] = useState(false); // Stato per tenere traccia se i Pokémon sono stati rivelati
 
   const handleUserChoice = (chosenPokemon) => {
     setUserChoice(chosenPokemon);
-    setResult(''); // Resetta il risultato quando si fa una scelta
+    setResult('');
+    setIsPokemonRevealed(false); // Resetta lo stato quando si fa una scelta
   };
 
   const handleComputerChoice = () => {
     const compChoice = pokemons[Math.floor(Math.random() * pokemons.length)];
     setComputerChoice(compChoice);
-    determineOutcome(userChoice, compChoice); // Determina l'esito solo dopo che entrambi i Pokémon sono stati rivelati
+    setIsPokemonRevealed(true); // Imposta lo stato a true quando il computer fa la scelta
   };
 
   const handleNewGame = () => {
     setUserChoice(null);
     setComputerChoice(null);
-    setResult(''); // Resetta il risultato per un nuovo gioco
+    setResult('');
+    setIsPokemonRevealed(false); // Resetta anche lo stato per un nuovo gioco
   };
 
-  const determineOutcome = (user, computer) => {
-    if (!user || !computer) return; // Se i Pokémon non sono stati rivelati, non mostrare niente
-    if (user.type === computer.type) {
+  const determineOutcome = () => {
+    if (!userChoice || !computerChoice) return; // Se i Pokémon non sono stati rivelati, non mostrare niente
+    if (userChoice.type === computerChoice.type) {
       setResult('Pareggio!');
     } else if (
-      (user.type === 'fire' && computer.type === 'grass') ||
-      (user.type === 'water' && computer.type === 'fire') ||
-      (user.type === 'grass' && computer.type === 'water')
+      (userChoice.type === 'fire' && computerChoice.type === 'grass') ||
+      (userChoice.type === 'water' && computerChoice.type === 'fire') ||
+      (userChoice.type === 'grass' && computerChoice.type === 'water')
     ) {
       setResult('Hai Vinto!');
     } else {
@@ -105,15 +108,15 @@ const MorraCinese = () => {
         )}
         <div className="button-container">
           <button onClick={handleNewGame}>Nuovo Gioco!</button>
-          <button onClick={handleComputerChoice}>Gioca col computer!</button>
+          <button onClick={handleComputerChoice} disabled={!userChoice}>Gioca col computer!</button>
         </div>
-        {computerChoice && (
+        {computerChoice && isPokemonRevealed && ( // Mostra il Pokémon del computer solo se rivelato
           <div className="chosen-pokemon">
             <PokemonImage name={computerChoice.name.toLowerCase()} />
           </div>
         )}
         <h3>Scelta del Computer</h3>
-        {result && <h2>{result}</h2>} {/* Mostra l'esito solo se è stato determinato */}
+        {isPokemonRevealed && result && <h2>{result}</h2>} {/* Mostra l'esito solo se entrambi i Pokémon sono rivelati */}
       </div>
     </div>
   );
