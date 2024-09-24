@@ -4,7 +4,6 @@ import PokemonImage from './PokemonImage';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-
 const settings = {
   dots: false,
   infinite: true,
@@ -14,10 +13,11 @@ const settings = {
   centerMode: true,
   focusOnSelect: true,
   autoplay: true,
-  autoplaySpeed:1000,
+  autoplaySpeed: 1000,
   pauseOnHover: false,
   cssEase: 'cubic-bezier(0.645, 0.045, 0.355, 1)', // Easing per un effetto slot machine
 };
+
 const PokemonSection = ({ title, pokemons, onPokemonSelect, interactive }) => {
   const [sliderIndex, setSliderIndex] = useState(0);
   const sliderRef = useRef(null);
@@ -40,7 +40,6 @@ const PokemonSection = ({ title, pokemons, onPokemonSelect, interactive }) => {
             onClick={() => handleClick(pokemon)}
           >
             <PokemonImage name={pokemon.name.toLowerCase()} />
-            
           </div>
         ))}
       </Slider>
@@ -72,56 +71,59 @@ const MorraCinese = () => {
     setComputerChoice(null);
   };
 
+  const determineOutcome = () => {
+    if (userChoice.type === computerChoice.type) {
+      return 'Pareggio!';
+    } else if (
+      (userChoice.type === 'fire' && computerChoice.type === 'grass') ||
+      (userChoice.type === 'water' && computerChoice.type === 'fire') ||
+      (userChoice.type === 'grass' && computerChoice.type === 'water')
+    ) {
+      return 'Hai Vinto!';
+    } else {
+      return 'Hai Perso!';
+    }
+  };
+
   return (
-    <div className="morra-cinese  ">
+    <div className="morra-cinese">
       <h1>PokéMorra!</h1>
       <div className="slider-column">
-        <div className="slider-column">
-          <PokemonSection title="Scegli il tuo Pokèmon!" pokemons={pokemons} onPokemonSelect={handleUserChoice} interactive />
-        </div>
-        <div className="result-column">
-          <h3>La tua Scelta</h3>
-          {userChoice && (
-            <div className="chosen-pokemon">
-              <PokemonImage name={userChoice.name.toLowerCase()} />
-              
-            </div>
-          )}
-          <div className="button-container">
+        <PokemonSection title="Scegli il tuo Pokèmon!" pokemons={pokemons} onPokemonSelect={handleUserChoice} interactive />
+      </div>
+      <div className="result-column">
+        <h3>La tua Scelta</h3>
+        {userChoice && (
+          <div className="chosen-pokemon">
+            <PokemonImage name={userChoice.name.toLowerCase()} />
+          </div>
+        )}
+        <div className="button-container">
           <button onClick={handleNewGame}>Nuovo Gioco!</button>
           <button onClick={handleComputerChoice}>Gioca col computer!</button>
-          
+        </div>
+        {computerChoice && (
+          <div className="chosen-pokemon">
+            <PokemonImage name={computerChoice.name.toLowerCase()} />
+          </div>
+        )}
+        <h3>Scelta del Computer</h3>
       </div>
-          
-          {computerChoice && (
-            <div className="chosen-pokemon">
-              <PokemonImage name={computerChoice.name.toLowerCase()} />
-              
+      <div className="slider-column">
+        <h1>
+          {userChoice && computerChoice && <h2>{determineOutcome()}</h2>}
+        </h1>
+      </div>
+      <div className="slider-column">
+        <Slider {...settings}>
+          {pokemons.map((pokemon, index) => (
+            <div key={index} className="pokemon-slide">
+              <PokemonImage name={pokemon.name.toLowerCase()} />
             </div>
-          )}
-         
-          <h3>Scelta del Computer</h3>
-         
-        </div>
-        <div className="slider-column">
-        <h1 >{userChoice && computerChoice && (
-            <h2>{userChoice.type === computerChoice.type ? 'Pareggio! ' : ` ${userChoice.type === 'fire' && computerChoice.type === 'grass' || userChoice.type === 'water' && computerChoice.type === 'fire' || userChoice.type === 'grass' && computerChoice.type === 'water' ? 'Hai Vinto' : 'Hai Perso!'}!`}</h2>
-          )}</h1></div>
-        <div className="slider-column">
-          <Slider {...settings}>
-            {pokemons.map((pokemon, index) => (
-              <div key={index} className="pokemon-slide">
-                <PokemonImage name={pokemon.name.toLowerCase()} />
-               
-              </div>
-            ))}
-          </Slider>
-          
-        </div>
+          ))}
+        </Slider>
       </div>
-     
     </div>
-    
   );
 };
 
