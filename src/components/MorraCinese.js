@@ -56,22 +56,27 @@ const MorraCinese = () => {
 
   const [userChoice, setUserChoice] = useState(null);
   const [computerChoice, setComputerChoice] = useState(null);
+  const [revealed, setRevealed] = useState(false); // Stato per tracciare se i Pokémon sono stati rivelati
 
   const handleUserChoice = (chosenPokemon) => {
     setUserChoice(chosenPokemon);
+    setRevealed(false); // Resetta la rivelazione quando si fa una scelta
   };
 
   const handleComputerChoice = () => {
     const compChoice = pokemons[Math.floor(Math.random() * pokemons.length)];
     setComputerChoice(compChoice);
+    setRevealed(true); // Rivela i Pokémon quando il computer fa la scelta
   };
 
   const handleNewGame = () => {
     setUserChoice(null);
     setComputerChoice(null);
+    setRevealed(false); // Resetta la rivelazione per un nuovo gioco
   };
 
   const determineOutcome = () => {
+    if (!userChoice || !computerChoice) return ''; // Se i Pokémon non sono stati rivelati, non mostrare niente
     if (userChoice.type === computerChoice.type) {
       return 'Pareggio!';
     } else if (
@@ -108,20 +113,7 @@ const MorraCinese = () => {
           </div>
         )}
         <h3>Scelta del Computer</h3>
-      </div>
-      <div className="slider-column">
-        <h1>
-          {userChoice && computerChoice && <h2>{determineOutcome()}</h2>}
-        </h1>
-      </div>
-      <div className="slider-column">
-        <Slider {...settings}>
-          {pokemons.map((pokemon, index) => (
-            <div key={index} className="pokemon-slide">
-              <PokemonImage name={pokemon.name.toLowerCase()} />
-            </div>
-          ))}
-        </Slider>
+        {revealed && <h2>{determineOutcome()}</h2>} {/* Mostra l'esito solo se i Pokémon sono stati rivelati */}
       </div>
     </div>
   );
