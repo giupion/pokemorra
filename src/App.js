@@ -1,15 +1,10 @@
 import React from 'react';
 import MorraCinese from './components/MorraCinese';
-import backgroundImage from './components/_2ae73e80-31d5-44c5-a55b-adce8d0914e4.jpg'; // Assicurati di avere il percorso corretto
+import './App.css';
 
 function App() {
   return (
-    <div 
-      className="App" 
-      style={{ 
-        backgroundImage: `url(${backgroundImage})`, 
-      }}
-    >
+    <div className="App">
       <MorraCinese />
     </div>
   );
