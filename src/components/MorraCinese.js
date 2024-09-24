@@ -69,6 +69,7 @@ const MorraCinese = () => {
     const compChoice = pokemons[Math.floor(Math.random() * pokemons.length)];
     setComputerChoice(compChoice);
     setIsPokemonRevealed(true); // Imposta lo stato a true quando il computer fa la scelta
+    determineOutcome(userChoice, compChoice); // Chiama la funzione di determinazione qui
   };
 
   const handleNewGame = () => {
@@ -78,14 +79,14 @@ const MorraCinese = () => {
     setIsPokemonRevealed(false); // Resetta anche lo stato per un nuovo gioco
   };
 
-  const determineOutcome = () => {
-    if (!userChoice || !computerChoice) return; // Se i Pokémon non sono stati rivelati, non mostrare niente
-    if (userChoice.type === computerChoice.type) {
+  const determineOutcome = (user, computer) => {
+    if (!user || !computer) return; // Se i Pokémon non sono stati rivelati, non mostrare niente
+    if (user.type === computer.type) {
       setResult('Pareggio!');
     } else if (
-      (userChoice.type === 'fire' && computerChoice.type === 'grass') ||
-      (userChoice.type === 'water' && computerChoice.type === 'fire') ||
-      (userChoice.type === 'grass' && computerChoice.type === 'water')
+      (user.type === 'fire' && computer.type === 'grass') ||
+      (user.type === 'water' && computer.type === 'fire') ||
+      (user.type === 'grass' && computer.type === 'water')
     ) {
       setResult('Hai Vinto!');
     } else {
