@@ -56,37 +56,37 @@ const MorraCinese = () => {
 
   const [userChoice, setUserChoice] = useState(null);
   const [computerChoice, setComputerChoice] = useState(null);
-  const [revealed, setRevealed] = useState(false); // Stato per tracciare se i Pokémon sono stati rivelati
+  const [result, setResult] = useState(''); // Stato per il risultato
 
   const handleUserChoice = (chosenPokemon) => {
     setUserChoice(chosenPokemon);
-    setRevealed(false); // Resetta la rivelazione quando si fa una scelta
+    setResult(''); // Resetta il risultato quando si fa una scelta
   };
 
   const handleComputerChoice = () => {
     const compChoice = pokemons[Math.floor(Math.random() * pokemons.length)];
     setComputerChoice(compChoice);
-    setRevealed(true); // Rivela i Pokémon quando il computer fa la scelta
+    determineOutcome(userChoice, compChoice); // Determina l'esito solo dopo che entrambi i Pokémon sono stati rivelati
   };
 
   const handleNewGame = () => {
     setUserChoice(null);
     setComputerChoice(null);
-    setRevealed(false); // Resetta la rivelazione per un nuovo gioco
+    setResult(''); // Resetta il risultato per un nuovo gioco
   };
 
-  const determineOutcome = () => {
-    if (!userChoice || !computerChoice) return ''; // Se i Pokémon non sono stati rivelati, non mostrare niente
-    if (userChoice.type === computerChoice.type) {
-      return 'Pareggio!';
+  const determineOutcome = (user, computer) => {
+    if (!user || !computer) return; // Se i Pokémon non sono stati rivelati, non mostrare niente
+    if (user.type === computer.type) {
+      setResult('Pareggio!');
     } else if (
-      (userChoice.type === 'fire' && computerChoice.type === 'grass') ||
-      (userChoice.type === 'water' && computerChoice.type === 'fire') ||
-      (userChoice.type === 'grass' && computerChoice.type === 'water')
+      (user.type === 'fire' && computer.type === 'grass') ||
+      (user.type === 'water' && computer.type === 'fire') ||
+      (user.type === 'grass' && computer.type === 'water')
     ) {
-      return 'Hai Vinto!';
+      setResult('Hai Vinto!');
     } else {
-      return 'Hai Perso!';
+      setResult('Hai Perso!');
     }
   };
 
@@ -113,7 +113,7 @@ const MorraCinese = () => {
           </div>
         )}
         <h3>Scelta del Computer</h3>
-        {revealed && <h2>{determineOutcome()}</h2>} {/* Mostra l'esito solo se i Pokémon sono stati rivelati */}
+        {result && <h2>{result}</h2>} {/* Mostra l'esito solo se è stato determinato */}
       </div>
     </div>
   );
